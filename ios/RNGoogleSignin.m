@@ -99,7 +99,7 @@ RCT_EXPORT_METHOD(signIn:(NSDictionary *)options
                   rejecter:(RCTPromiseRejectBlock)reject)
 {
   dispatch_async(dispatch_get_main_queue(), ^{
-      UIViewController* presentingViewController = RCTPresentedViewController();
+      UIViewController* presentingViewController = [self getRootVC];
       NSString* hint = options[@"loginHint"];
       NSArray* scopes = self.scopes;
 
@@ -120,7 +120,7 @@ RCT_EXPORT_METHOD(addScopes:(NSDictionary *)options
         return;
       }
       NSArray* scopes = options[@"scopes"];
-      UIViewController* presentingViewController = RCTPresentedViewController();
+      UIViewController* presentingViewController = [self getRootVC];
 
       [currentUser addScopes:scopes presentingViewController:presentingViewController completion:^(GIDSignInResult * _Nullable signInResult, NSError * _Nullable error) {
           [self handleCompletion:signInResult withError:error withResolver:resolve withRejector:reject fromCallsite:@"addScopes"];
@@ -183,6 +183,27 @@ RCT_EXPORT_METHOD(getTokens:(RCTPromiseResolveBlock)resolve
       }
     }
   }];
+}
+
+- (UIViewController*) getRootVC {
+    NSArray *allWindows = [[UIApplication sharedApplication] windows];
+    UIWindow *topWindow = nil;
+    CGFloat highestWindowLevel = -CGFLOAT_MAX;
+
+    for (UIWindow *window in allWindows) {
+        if (window.windowLevel > highestWindowLevel && window.rootViewController != nil) {
+            topWindow = window;
+            highestWindowLevel = window.windowLevel;
+        }
+    }
+    
+    UIViewController *root = topWindow.rootViewController;
+    
+    while (root.presentedViewController != nil) {
+        root = root.presentedViewController;
+    }
+    
+    return root;
 }
 
 - (NSDictionary*)createUserDictionary: (nullable GIDSignInResult *) result {
