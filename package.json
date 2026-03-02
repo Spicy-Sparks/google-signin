@@ -1,5 +1,5 @@
 {
-  "name": "@react-native-google-signin/google-signin",
+  "name": "@javascriptcommon/react-native-google-signin",
   "version": "16.1.2",
   "description": "Google sign in for your react native applications",
   "funding": "https://universal-sign-in.com",
@@ -63,7 +63,7 @@
     "android",
     "web"
   ],
-  "repository": "https://github.com/react-native-google-signin/google-signin",
+  "repository": "https://github.com/Spicy-Sparks/google-signin",
   "author": "Vojtech Novak <vonovak@gmail.com> (https://github.com/vonovak)",
   "license": "MIT",
   "bugs": {
@@ -72,7 +72,7 @@
   "homepage": "https://github.com/react-native-google-signin/google-signin#readme",
   "publishConfig": {
     "registry": "https://registry.npmjs.org/",
-    "provenance": true
+    "access": "public"
   },
   "devDependencies": {
     "@babel/eslint-parser": "^7.24.1",
