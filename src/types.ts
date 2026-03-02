@@ -7,6 +7,10 @@ export type SignInParams = {
    * [See docs here](https://developers.google.com/identity/sign-in/ios/reference/Classes/GIDSignIn#-signinwithpresentingviewcontroller:hint:completion:)
    */
   loginHint?: string;
+  /**
+   * iOS only. Optional nonce for OIDC flows.
+   */
+  nonce?: string;
 };
 
 /**

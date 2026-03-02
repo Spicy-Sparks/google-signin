@@ -58,8 +58,7 @@ public class Utils {
             final boolean offlineAccess,
             final boolean forceCodeForRefreshToken,
             final String accountName,
-            final String hostedDomain,
-            final String nonce
+            final String hostedDomain
     ) {
         GoogleSignInOptions.Builder googleSignInOptionsBuilder = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(new Scope(Scopes.EMAIL), scopes);
@@ -74,9 +73,6 @@ public class Utils {
         }
         if (hostedDomain != null && !hostedDomain.isEmpty()) {
             googleSignInOptionsBuilder.setHostedDomain(hostedDomain);
-        }
-        if (nonce != null && !nonce.isEmpty()) {
-            googleSignInOptionsBuilder.setNonce(nonce);
         }
         return googleSignInOptionsBuilder.build();
     }
