@@ -1,6 +1,7 @@
 package com.reactnativegooglesignin;
 
 import android.net.Uri;
+
 import androidx.annotation.NonNull;
 
 import com.facebook.react.bridge.Arguments;
@@ -9,10 +10,10 @@ import com.facebook.react.bridge.WritableArray;
 import com.facebook.react.bridge.WritableMap;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.Scopes;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.common.api.CommonStatusCodes;
 import com.google.android.gms.common.api.Scope;
-import com.google.android.gms.common.Scopes;
 import com.google.android.gms.tasks.Task;
 
 public class Utils {
@@ -45,9 +46,7 @@ public class Utils {
         WritableArray scopes = Arguments.createArray();
         for (Scope scope : acct.getGrantedScopes()) {
             String scopeString = scope.toString();
-            if (scopeString.startsWith("http")) {
-                scopes.pushString(scopeString);
-            }
+            scopes.pushString(scopeString);
         }
         params.putArray("scopes", scopes);
         return params;
@@ -59,7 +58,8 @@ public class Utils {
             final boolean offlineAccess,
             final boolean forceCodeForRefreshToken,
             final String accountName,
-            final String hostedDomain
+            final String hostedDomain,
+            final String nonce
     ) {
         GoogleSignInOptions.Builder googleSignInOptionsBuilder = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestScopes(new Scope(Scopes.EMAIL), scopes);
@@ -74,6 +74,9 @@ public class Utils {
         }
         if (hostedDomain != null && !hostedDomain.isEmpty()) {
             googleSignInOptionsBuilder.setHostedDomain(hostedDomain);
+        }
+        if (nonce != null && !nonce.isEmpty()) {
+            googleSignInOptionsBuilder.setNonce(nonce);
         }
         return googleSignInOptionsBuilder.build();
     }
